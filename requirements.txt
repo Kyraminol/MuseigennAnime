@@ -1,0 +1,10 @@
+requests
+flask
+youtube-dl
+flask_socketio
+werkzeug
+gevent
+gevent-websocket
+bs4
+lxml
+netifaces

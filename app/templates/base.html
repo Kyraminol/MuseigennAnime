@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="{{ self._TemplateReference__context.get("lang", "en") }}">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>{% block title %}MuseigennAnime WebApp{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="{{ url_for("static", filename="lib/materialize/materialize.min.css")  }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="{{ url_for("static", filename="css/global.css")  }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <style>@font-face { font-family: Electroharmonix; src: url("{{ url_for("static", filename="font/electroharmonix.ttf") }}"); }</style>
+  {% block css %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}" {% block body_attrs %}{% endblock %}>
+  <header>
+    <nav class="{% block nav_class %}{% endblock %}" {% block nav_attrs %}{% endblock %}>
+      <div class="nav-wrapper">
+        {% block sidenav_trigger %}{% endblock %}
+        {% block logo %}<a href="#" class="brand-logo {% block brand_logo_class %}{% endblock %}" style="font-family: Electroharmonix, serif">MuseigennAnime</a>{% endblock %}
+        {% block navbar %}{% endblock %}
+        <ul class="right">
+          {% block right_menu %}{% endblock %}
+        </ul>
+      </div>
+      <div class="nav-content {% block nav_content_class %}{% endblock %}">
+        {% block nav_content %}{% endblock %}
+      </div>
+    </nav>
+    {% block sidenav %}{% endblock %}
+  </header>
+
+  <main>
+    {% block main_container %}
+      <div class="container">
+        {% block main_content %}{% endblock %}
+      </div>
+    {% endblock %}
+  </main>
+
+  <footer class="page-footer {% block footer_class %}{% endblock %}" {% block footer_attrs %}{% endblock %}>
+    {% block footer %}{% endblock %}
+    <div class="footer-copyright {% block footer_copyright_class %}{% endblock %}">
+      {% block footer_cointainer %}
+        <div class="container {% block footer_cointainer_class %}{% endblock %}">
+          © 2018-2019 <a style="color: inherit" href="https://github.com/Kyraminol">Kyraminol</a><br/>
+          {% block footer_content %}{% endblock %}
+        </div>
+      {% endblock %}
+    </div>
+  </footer>
+</body>
+
+{% block body_post %}{% endblock %}
+
+<script src="{{ url_for("static", filename="lib/jquery-3.3.1.min.js")  }}"></script>
+<script src="{{ url_for("static", filename="lib/materialize/materialize.min.js")  }}"></script>
+<script src="{{ url_for("static", filename="lib/jquery.flatshadow.min.js")  }}"></script>
+<script type="text/javascript">
+  var logo_shadow_hex = {{ theme.get("LOGO_SHADOW_HEX", "#000000")|tojson }};
+</script>
+<script src="{{ url_for("static", filename="js/global.js")  }}"></script>
+{% block js %}{% endblock %}
+</html>

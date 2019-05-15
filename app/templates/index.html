@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+
+{% block css %}
+  <link href="{{ url_for("static", filename="css/index.css")  }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+{% endblock %}
+
+{% block right_menu %}
+  <li><a href="#" class="modal-trigger {{ theme.get("INDEX_NAV_TEXT", "white-text") }} hide-on-small-and-down" data-target="download-manager-modal" id="download-manager-trigger"><i class="material-icons left">file_download</i><span class="hide-on-med-and-down">{{ translate("download_manager", lang) }}</span></a></li>
+  <li><a href="#" class="modal-trigger {{ theme.get("INDEX_NAV_TEXT", "white-text") }} hide-on-small-and-down" data-target="settings-modal" id="settings-trigger"><i class="material-icons left">settings</i><span class="hide-on-med-and-down">{{ translate("settings", lang) }}</span></a></li>
+{% endblock %}
+
+{% block sidenav_trigger %}
+  <a href="#" data-target="sidenav" class="sidenav-trigger hide-on-med-and-up {{ theme.get("PLAYER_NAV_TEXT", "white-text") }}" style="z-index: 200; position: relative"><i class="material-icons">menu</i></a>
+{% endblock %}
+
+{% block sidenav %}
+  <ul id="sidenav" class="sidenav {{ theme.get("INDEX_NAV_MAIN", "blue-grey darken-3") }}">
+    <li class="no-padding"><a href="#" class="modal-trigger {{ theme.get("INDEX_NAV_TEXT", "white-text") }}" data-target="download-manager-modal"><i class="material-icons left {{ theme.get("INDEX_NAV_TEXT", "white-text") }}">file_download</i><span>{{ translate("download_manager", lang) }}</span></a></li>
+    <li class="no-padding"><a href="#" class="modal-trigger {{ theme.get("INDEX_NAV_TEXT", "white-text") }}" data-target="settings-modal"><i class="material-icons left {{ theme.get("INDEX_NAV_TEXT", "white-text") }}">settings</i><span>{{ translate("settings", lang) }}</span></a></li>
+  </ul>
+{% endblock %}
+
+{% block nav_class %}nav-extended {{ theme.get("INDEX_NAV_MAIN", "blue-grey darken-4") }}{% endblock %}
+{% block brand_logo_class %}{{ theme.get("INDEX_NAV_TEXT", "white-text") }}{% endblock %}
+{% block body_class %}{{ theme.get("INDEX_BODY_MAIN", "blue-grey darken-3") }}{% endblock %}
+{% block footer_class %}{{ theme.get("INDEX_FOOTER_MAIN", "blue-grey darken-4") }}{% endblock %}
+{% block footer_cointainer_class %}{{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}{% endblock %}
+{% block footer_content %}{{ translate("theme_by", lang).format(theme_name=theme.get("THEME_NAME", translate("settings_theme_no_name", lang)), theme_author=theme.get("THEME_AUTHOR", translate("settings_theme_no_author", lang))) }}{% endblock %}
+
+{% block body_attrs %}background="{{ theme.get("INDEX_BODY_BACKGROUND_IMAGE_URL", "") }}"{% endblock %}
+
+
+{% block nav_content %}
+  <ul class="tabs tabs-transparent" id="handlers-tab">
+    <li class="tab hide default-tab"><a href="#nav-default-tab"></a></li>
+    {% for handler in handlers.values() %}
+      {% if handler.name not in handlers_config or handlers_config[handler.name] == True %}
+        <li class="tab" id="tab-handler-{{ handler.id }}"><a href="#nav-handler-{{ handler.id }}">{{ handler.name }}</a></li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+{% endblock %}
+
+{% block main_content %}
+  <div class="row"></div>
+  <div class="row hide" id="search-row">
+    <div class="card-panel col s10 offset-s1 m8 offset-m2 {{ theme.get("INDEX_LIST_HEADER", "blue-grey darken-4") }}">
+      <div class="switch right-align">
+        <label>
+          {{ translate("search_current_module", lang) }}
+          <input type="checkbox" id="search-all-switch" autocomplete="off">
+          <span class="lever"></span>
+          {{ translate("search_all_modules", lang) }}
+        </label>
+      </div>
+      <div class="col s10 offset-s1 {{ theme.get("INDEX_LIST_HEADER_TEXT", "white-text") }} hide" id="search-all-loading">
+        {{ translate("loading", lang) }}
+        <div class="progress"><div class="indeterminate {{ theme.get("INDEX_LIST_LOADING", "blue") }}"></div></div>
+      </div>
+      <div class="input-field col s12" id="search-div">
+        <i class="material-icons prefix {{ theme.get("INDEX_LIST_HEADER_TEXT", "white-text") }}">search</i>
+        <input id="search-input" type="text" class="{{ theme.get("INDEX_LIST_HEADER_TEXT", "white-text") }} autocomplete" autocomplete="off">
+        <label for="search-input">{{ translate("search", lang) }}</label>
+      </div>
+    </div>
+  </div>
+
+  <div id="nav-default-tab" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }} center-align">
+    <div class="row">
+      <h3>{{ translate("select_module", lang) }}</h3>
+      {% for handler in handlers.values() %}
+        {% if handler.name not in handlers_config or handlers_config[handler.name] == True %}
+          <div class="col s12 m6">
+            <div class="card {{ theme.get("INDEX_LIST_HEADER", "blue-grey darken-4") }}">
+              <div class="card-content white-text">
+                <span class="card-title">{{ handler.name }}</span>
+              </div>
+              <div class="card-action right-align">
+                <a href="#" data-handler="{{ handler.id }}" class="btn handler-shortcut-open {{ theme.get("INDEX_LIST_BUTTON", "red") }} {{ theme.get("INDEX_LIST_BUTTON_TEXT", "white-text") }}">{{ translate("open_list", lang) }}</a>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% for handler in handlers.values() %}
+    {% if handler.name not in handlers_config or handlers_config[handler.name] == True %}
+      <div id="nav-handler-{{ handler.id }}" style="display: none;">
+        <div class="row">
+          <div class="card-panel col s10 offset-s1 m6 offset-m3 l4 offset-l4 {{ theme.get("INDEX_LIST_HEADER", "blue-grey darken-4") }} {{ theme.get("INDEX_LIST_HEADER_TEXT", "white-text") }} center-align preloader-panel">
+            <h4>{{ translate("loading", lang) }}</h4>
+            <div class="progress"><div class="indeterminate {{ theme.get("INDEX_LIST_LOADING", "blue") }}"></div></div>
+          </div>
+        </div>
+        <div class="center-align"><ul class="pagination"></ul></div>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+{% endblock %}
+
+
+{% block body_post %}
+  <div id="settings-modal" class="modal modal-fixed-footer {{ theme.get("INDEX_BODY_MAIN", "blue-grey darken-3") }} {{ theme.get("INDEX_BODY_TEXT", "white-text") }}">
+    <div class="modal-content">
+      <ul class="tabs tabs-fixed-width {{ theme.get("INDEX_BODY_MAIN", "blue-grey darken-3") }} {{ theme.get("INDEX_BODY_TEXT", "white-text") }}" id="settings-tabs">
+        <li class="tab"><a href="#settings-tab-settings" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("settings", lang) }}</a></li>
+        <li class="tab"><a href="#settings-tab-modules" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("modules", lang) }}</a></li>
+        <li class="tab{% if config.get("SETTINGS_ADVANCED_SWITCH", "false") == "false" %} hide{% endif %}" id="settings-advanced-li"><a href="#settings-tab-advanced" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("advanced", lang) }}</a></li>
+      </ul>
+      <div id="settings-tab-settings">
+        <h5>{{ translate("download", lang) }}</h5>
+        <div class="row">
+          <div class="input-field col s9">
+            <i class="material-icons prefix">folder</i>
+            <input id="settings-download-path" type="text" class="validate {{ theme.get("INDEX_BODY_TEXT", "white-text") }}" value="{{ config.get("DOWNLOAD_PATH", "") }}">
+            <label for="settings-download-path" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("download_folder", lang) }}</label>
+          </div>
+          <div class="input-field col s3">
+            <input id="settings-download-manager-max" type="text" class="validate {{ theme.get("INDEX_BODY_TEXT", "white-text") }}" value="{{ config.get("DOWNLOAD_MANAGER_MAX_DOWNLOADS", "2") }}">
+            <label for="settings-download-manager-max" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("download_manager_max_downloads", lang) }}</label>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col s6 m4 offset-m2">
+            <input type="checkbox" disabled class="filled-in"{% if config.get("DOWNLOAD_ANIME_SUBPATH") == True %} checked="checked"{% endif %} />
+            <span class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("settings_anime_subpath", lang) }}</span>
+          </label>
+          <label class="col s6 m4 offset-m1">
+            <input type="checkbox" disabled class="filled-in"{% if config.get("DOWNLOAD_SEASON_SUBPATH") == True %} checked="checked"{% endif %} />
+            <span class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("settings_season_subpath", lang) }}</span>
+          </label>
+        </div>
+        <h5>{{ translate("interface", lang) }}</h5>
+        <div class="row">
+          <div class="input-field col s11">
+            <i class="material-icons prefix">color_lens</i>
+            <select id="settings-theme" autocomplete="off">
+              {% for key, value in themes.items() %}
+                <option value="{{ key }}" {% if theme.get("__theme_folder__") == key %}selected{% endif %}>{{ value.get("THEME_NAME", translate("settings_theme_no_name", lang)) }} ({{ value.get("THEME_AUTHOR", translate("settings_theme_no_author", lang)) }})</option>
+              {% endfor %}
+            </select>
+            <label for="settings-theme">{{ translate("theme", lang) }}</label>
+            <div class="right">
+              <a href="#" class="btn-flat waves-effect prefix {{ theme.get("INDEX_BODY_TEXT", "white-text") }}" id="settings-reload-themes"><i class="material-icons left">sync</i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row"></div>
+        <div class="row">
+          <div class="switch">
+            <label>
+              {{ translate("settings_advanced_switch", lang) }}
+              <input type="checkbox" id="settings-advanced-switch"{% if config.get("SETTINGS_ADVANCED_SWITCH") == "true" %} checked="checked"{% endif %} autocomplete="off">
+              <span class="lever"></span>
+            </label>
+          </div>
+        </div>
+        <div class="row"></div>
+        <div class="row">
+          <a href="#" class="btn red white-text" id="settings-shutdown">{{ translate("shutdown_app", lang) }}</a>
+        </div>
+      </div>
+      <div id="settings-tab-modules">
+        <h4 class="center-align">{{ translate("modules_select", lang) }}</h4>
+        <table class="centered">
+          <tbody id="settings-modules-tbody">
+          {% for handler in handlers.values() %}
+            <tr>
+              <td>{{ handler.name }}</td>
+              <td>
+                <div class="switch">
+                  <label>
+                    <input type="checkbox" data-handler="{{ handler.name }}" {% if handler.name not in handlers_config or handlers_config[handler.name] == True %}checked="checked"{% endif %} autocomplete="off">
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div id="settings-tab-advanced">
+        <p>{{ translate("settings_advanced_text", lang) }}</p>
+        <div class="row">
+          <div class="switch col s2">
+            <label>
+              {{ translate("interface_listen_all", lang) }}
+              <input type="checkbox" disabled>
+              <span class="lever"></span>
+            </label>
+          </div>
+          <div class="switch col s2">
+            <label>
+              {{ translate("interface_listen_custom", lang) }}
+              <input type="checkbox" disabled>
+              <span class="lever"></span>
+            </label>
+          </div>
+          <div class="input-field col s8">
+            <i class="material-icons prefix">http</i>
+            <input id="settings-interface" disabled type="text" class="validate {{ theme.get("INDEX_BODY_TEXT", "white-text") }}" value="{{ config.get("IFACE", "") }}">
+            <label for="settings-interface" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("interface", lang) }}</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s4">
+            <i class="material-icons prefix">https</i>
+            <input id="settings-port" disabled type="text" class="validate {{ theme.get("INDEX_BODY_TEXT", "white-text") }}" value="{{ config.get("PORT", "") }}">
+            <label for="settings-port" class="{{ theme.get("INDEX_BODY_TEXT", "white-text") }}">{{ translate("port", lang) }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer {{ theme.get("INDEX_FOOTER_MAIN", "blue-grey darken-4") }}">
+      <a href="#" class="modal-action modal-close waves-effect btn-flat {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="settings-cancel">{{ translate("cancel", lang) }}</a>
+      <a href="#" class="modal-action modal-close waves-effect btn-flat {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="settings-save">{{ translate("save", lang) }}</a>
+    </div>
+  </div>
+  <div id="shutdown-modal" class="modal {{ theme.get("INDEX_BODY_MAIN", "blue-grey darken-3") }} {{ theme.get("INDEX_BODY_TEXT", "white-text") }}">
+    <div class="modal-content">
+      <h4 class="center-align">{{ translate("shutdown_modal_confirm", lang) }}</h4>
+    </div>
+    <div class="modal-footer {{ theme.get("INDEX_FOOTER_MAIN", "blue-grey darken-4") }}">
+      <a href="#" class="modal-action modal-close waves-effect btn-flat {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="shutdown-cancel">{{ translate("cancel", lang) }}</a>
+      <a href="#" class="modal-action modal-close waves-effect btn-flat {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="shutdown-confirm">{{ translate("confirm", lang) }}</a>
+    </div>
+  </div>
+  <div id="download-modal" class="modal modal-fixed-footer {{ theme.get("INDEX_BODY_MAIN", "blue-grey darken-3") }} {{ theme.get("INDEX_BODY_TEXT", "white-text") }}">
+    <div class="modal-content">
+      <h4 class="center-align">{{ translate("download", lang) }}</h4>
+      <div id="download-modal-loading" class="row {{ theme.get("INDEX_BODY_TEXT", "white-text") }}">
+        <div class="center-align"><h6>{{ translate("loading", lang) }}</h6><br>
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="switch right-align hide" id="download-modal-device">
+        <label>
+          {{ translate("download_stream_device", lang) }}
+          <input type="checkbox" id="download-modal-device-switch" autocomplete="off" class="stream-switch">
+          <span class="lever"></span>
+        </label>
+      </div>
+      <div class="row" id="download-modal-content"></div>
+    </div>
+    <div class="modal-footer {{ theme.get("INDEX_FOOTER_MAIN", "blue-grey darken-4") }}">
+      <a href="#" class="modal-action modal-close waves-effect btn-flat {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="download-cancel">{{ translate("cancel", lang) }}</a>
+      <a href="#" class="modal-action modal-close waves-effect btn-flat {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="download-download">{{ translate("download", lang) }}</a>
+    </div>
+  </div>
+  <div id="download-manager-modal" class="modal modal-fixed-footer {{ theme.get("INDEX_BODY_MAIN", "blue-grey darken-3") }} {{ theme.get("INDEX_BODY_TEXT", "white-text") }}">
+    <div class="modal-content">
+      <h5 id="download-manager-modal-title">{{ translate("download_manager_downloads", lang).format(0,0,0) }}</h5>
+      <div class="row">
+        <table class="highlight responsive-table hide" id="download-manager-modal-table">
+          <thead>
+          <tr>
+            <th>{{ translate("anime", lang) }}</th>
+            <th>{{ translate("episode", lang) }}</th>
+            <th>{{ translate("episode_title", lang) }}</th>
+            <th>{{ translate("status", lang) }}</th>
+            <th>{{ translate("progress", lang) }}</th>
+            <th>{{ translate("speed", lang) }}</th>
+            <th>{{ translate("eta", lang) }}</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer {{ theme.get("INDEX_FOOTER_MAIN", "blue-grey darken-4") }}">
+      <a href="#" class="modal-action waves-effect btn-flat hide {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="download-manager-modal-cancel-all">{{ translate("cancel_all", lang) }}</a>
+      <a href="#" class="modal-action waves-effect btn-flat hide {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}" id="download-manager-modal-clean">{{ translate("clean", lang) }}</a>
+      <a href="#" class="modal-action modal-close waves-effect btn-flat {{ theme.get("INDEX_FOOTER_TEXT", "white-text") }}">{{ translate("close", lang) }}</a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js %}
+  <script>
+    var strings = {
+      cancel: {{ translate("cancel", lang)|tojson }},
+      watch: {{ translate("watch", lang)|tojson }},
+      download: {{ translate("download", lang)|tojson }},
+      episode: {{ translate("episode", lang)|tojson }},
+      loading: {{ translate("loading", lang)|tojson }},
+      error_loading_list: {{ translate("error_loading_list", lang)|tojson }},
+      error_empty_list: {{ translate("error_empty_list", lang)|tojson }},
+      error_loading_info: {{ translate("error_loading_info", lang)|tojson }},
+      error_loading_info_not_available: {{ translate("error_loading_info_not_available", lang)|tojson }},
+      settings_theme_no_name: {{ translate("settings_theme_no_name", lang)|tojson }},
+      settings_theme_no_author: {{ translate("settings_theme_no_author", lang)|tojson }},
+      download_manager_downloads: {{ translate("download_manager_downloads", lang)|tojson }},
+      finished: {{ translate("finished", lang)|tojson }},
+      queued: {{ translate("queued", lang)|tojson }},
+      cancelled: {{ translate("cancelled", lang)|tojson }},
+      downloading: {{ translate("downloading", lang)|tojson }}
+    };
+    var theme = {
+      index_nav_main: {{ theme.get("INDEX_NAV_MAIN", "blue-grey darken-4")|tojson }},
+      index_nav_text: {{ theme.get("INDEX_NAV_TEXT", "white-text")|tojson }},
+      index_body_main: {{ theme.get("INDEX_BODY_MAIN", "blue-grey darken-3")|tojson }},
+      index_body_text: {{ theme.get("INDEX_BODY_TEXT", "white-text")|tojson }},
+      index_pagination_main: {{ theme.get("INDEX_PAGINATION_MAIN", "")|tojson }},
+      index_pagination_text: {{ theme.get("INDEX_PAGINATION_TEXT", "white-text")|tojson }},
+      index_pagination_active_main: {{ theme.get("INDEX_PAGINATION_ACTIVE_MAIN", "red")|tojson }},
+      index_pagination_active_text: {{ theme.get("INDEX_PAGINATION_ACTIVE_TEXT", "white-text")|tojson }},
+      index_list_header: {{ theme.get("INDEX_LIST_HEADER", "blue-grey darken-4")|tojson }},
+      index_list_header_text: {{ theme.get("INDEX_LIST_HEADER_TEXT", "white-text")|tojson }},
+      index_list_body: {{ theme.get("INDEX_LIST_BODY", "blue-grey darken-3")|tojson }},
+      index_list_body_text: {{ theme.get("INDEX_LIST_BODY_TEXT", "white-text")|tojson }},
+      index_list_loading: {{ theme.get("INDEX_LIST_LOADING", "blue")|tojson }},
+      index_list_button: {{ theme.get("INDEX_LIST_BUTTON", "red")|tojson }},
+      index_list_button_text: {{ theme.get("INDEX_LIST_BUTTON_TEXT", "white-text")|tojson }},
+      index_list_info_header: {{ theme.get("INDEX_LIST_INFO_HEADER", "blue-grey darken-3")|tojson }},
+      index_list_info_header_text: {{ theme.get("INDEX_LIST_INFO_HEADER_TEXT", "white-text")|tojson }},
+      index_list_info_body: {{ theme.get("INDEX_LIST_INFO_BODY", "blue-grey darken-2")|tojson }},
+      index_list_info_body_text: {{ theme.get("INDEX_LIST_INFO_BODY_TEXT", "white-text")|tojson }},
+      __theme_folder__: {{ theme.get("__theme_folder__", "")|tojson }}
+    }
+  </script>
+  <script src="{{ url_for("static", filename="lib/jquery.redirect.js")  }}"></script>
+  <script src="{{ url_for("static", filename="lib/socket.io.js")  }}"></script>
+  <script src="{{ url_for("static", filename="lib/formatstring.min.js") }}"></script>
+  <script src="{{ url_for("static", filename="lib/jquery.filterbydata.min.js") }}"></script>
+  <script src="{{ url_for("static", filename="js/index.js")  }}"></script>
+{% endblock %}

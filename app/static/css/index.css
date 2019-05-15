@@ -1,0 +1,7 @@
+.capitalize {
+    text-transform:capitalize;
+}
+
+.no-border-bottom{
+    border-bottom: 0;
+}

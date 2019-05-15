@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}MuseigennAnime Player{% endblock %}
+
+{% block css %}
+  <link href="{{ url_for("static", filename="css/player.css")  }}" type="text/css" rel="stylesheet" media="screen,projection"/>
+{% endblock %}
+
+{% block sidenav_trigger %}
+  <a href="#" data-target="player-episodes" class="sidenav-trigger show-on-large show-on-dim {{ theme.get("PLAYER_NAV_TEXT", "white-text") }}" style="z-index: 200; position: relative"><i class="material-icons">menu</i></a>
+{% endblock %}
+
+{% block right_menu %}
+  <li><a href="#" id="lights-off" class="hide show-on-dim {{ theme.get("PLAYER_NAV_TEXT", "white-text") }}"><i class="material-icons left">lightbulb_outline</i><span class="hide-on-med-and-down">{{ translate("lights", lang) }}</span></a></li>
+{% endblock %}
+
+{% block nav_class %}{{ theme.get("PLAYER_NAV_MAIN", "blue-grey darken-4") }}{% endblock %}
+{% block brand_logo_class %}{{ theme.get("PLAYER_NAV_TEXT", "white-text") }}{% endblock %}
+{% block body_class %}{{ theme.get("PLAYER_BODY_MAIN", "blue-grey darken-3") }}{% endblock %}
+{% block footer_class %}{{ theme.get("PLAYER_FOOTER_MAIN", "blue-grey darken-4") }}{% endblock %}
+{% block footer_cointainer_class %}{{ theme.get("PLAYER_FOOTER_TEXT", "white-text") }} show-on-dim{% endblock %}
+{% block footer_content %}{{ translate("theme_by", lang).format(theme_name=theme.get("THEME_NAME", translate("settings_theme_no_name", lang)), theme_author=theme.get("THEME_AUTHOR", translate("settings_theme_no_author", lang))) }}{% endblock %}
+
+{% block body_attrs %}background="{{ theme.get("PLAYER_BODY_BACKGROUND_IMAGE_URL", "") }}"{% endblock %}
+
+{% block sidenav %}
+  <ul id="player-episodes" class="sidenav {{ theme.get("PLAYER_SIDENAV_MAIN", "blue-grey darken-3") }}">
+    <li class="no-padding">
+      {% for season in anime.get_seasons() %}
+        <ul class="collapsible collapsible-accordion">
+          <li class="season" id="season-{{ season.id }}">
+            <a class="collapsible-header {{ theme.get("PLAYER_SIDENAV_TEXT", "white-text") }}">{{ season.name }}<i class="material-icons {{ theme.get("PLAYER_SIDENAV_TEXT", "white-text") }}">arrow_drop_down</i></a>
+            <div class="collapsible-body {{ theme.get("PLAYER_SIDENAV_EPISODE_MAIN", "blue-grey darken-2") }}">
+              <ul>
+                {% for episode in season.get_episodes() %}
+                  <li><a href="#" class="{{ theme.get("PLAYER_SIDENAV_EPISODE_TEXT", "white-text") }} episode" id="episode-{{ episode.id }}">
+                    {% if not episode.get_data("episode_n", "") == "" %}
+                      {{ translate("episode", lang) }} {{ episode.get_data("episode_n") }}
+                    {% elif not episode.get_data("episode_title", "") == "" %}
+                      {{ episode.get_data("episode_title") }}
+                    {% else %}
+                      {{ translate("episode", lang) }} {{ episode.id }}
+                    {% endif %}
+                  </a></li>
+                {% endfor %}
+                <li><div style="visibility: hidden">.</div></li>
+                <li><div style="visibility: hidden">.</div></li>
+                <li><div style="visibility: hidden">.</div></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      {% endfor %}
+    </li>
+  </ul>
+{% endblock %}
+
+{% block main_content %}
+  <div class="row" id="content-header">
+    <div class="hide" id="handler-id">{{ anime.handler.id }}</div>
+    <div class="hide" id="anime-id">{{ anime.id }}</div>
+    <div class="hide" id="episode-id"></div>
+    <div class="center-align {{ theme.get("PLAYER_BODY_TEXT", "white-text") }}" id="anime-name"><h4 style="display: inline;">{{ anime.name }}</h4> ({{ anime.handler.name }})</div>
+    <ul class="pagination white-text center-align hide" id="episode-name-div">
+      <li><a class="{{ theme.get("PLAYER_BODY_TEXT", "white-text") }} btn-flat" id="episode-prev"><i class="material-icons left show-on-dim">chevron_left</i></a></li>
+      <li><a class="{{ theme.get("PLAYER_BODY_TEXT", "white-text") }}" id="episode-name" disabled></a></li>
+      <li><a class="{{ theme.get("PLAYER_BODY_TEXT", "white-text") }} btn-flat" id="episode-next"><i class="material-icons right show-on-dim">chevron_right</i></a></li>
+    </ul>
+  </div>
+
+  <div class="row">
+    <div class="col s12 center-align" id="player-div">
+      <div id="player" class="hide">
+        <div id="player-overlay" class="hide"></div>
+        <div class="">
+          <iframe id="player-iframe" src="" frameborder="0" allowfullscreen></iframe>
+          <video class="responsive-video z-depth-2 show-on-dim hide" id="player-video" controls>
+            <source src="{{ url_for("static", filename="video/blank.m4v") }}">
+          </video>
+          </div>
+      </div>
+
+      <div id="player-loading" class="{{ theme.get("PLAYER_BODY_TEXT", "white-text") }} hide">
+        <div class="center-align"><h4>{{ translate("loading", lang) }}</h4><br>
+          <div class="preloader-wrapper big active">
+            <div class="spinner-layer spinner-red">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div id="dim-lights-div"></div>
+{% endblock %}
+
+{% block js %}
+  <script type="text/javascript">
+    var strings = {
+      episode: {{ translate("episode", lang)|tojson }},
+      error_downloading: {{ translate("error_downloading", lang)|tojson }},
+      hls_not_supported: {{ translate("hls_not_supported", lang)|tojson }},
+      error_loading_episode: {{ translate("error_loading_episode", lang)|tojson }},
+      autoplaying: {{ translate("autoplaying", lang)|tojson }},
+      click_anywhere_cancel: {{ translate("click_anywhere_cancel", lang)|tojson }}
+    }
+  </script>
+  <script src="{{ url_for("static", filename="lib/hls.min.js") }}"></script>
+  <script src="{{ url_for("static", filename="lib/progressbar.min.js") }}"></script>
+  <script src="{{ url_for("static", filename="js/player.js")  }}"></script>
+{% endblock %}

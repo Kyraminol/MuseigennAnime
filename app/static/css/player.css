@@ -1,0 +1,36 @@
+#dim-lights-div {
+    display: none;
+    background: #000;
+    position: fixed; left: 0; top: 0;
+    width: 100%; height: 100%;
+    opacity: .95;
+    z-index: 100;
+}
+
+#player-div  {
+    display: inline-block;
+    position: relative;
+}
+
+#player-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: 0 12px 5px 10px;
+    font-size: 20px;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, 0.90);
+    z-index: 300;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+}
+
+.show-on-dim {
+    position: relative;
+    z-index: 200;
+}

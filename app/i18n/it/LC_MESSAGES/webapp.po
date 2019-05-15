@@ -1,0 +1,310 @@
+# Translations template for PROJECT.
+# Copyright (C) 2018 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2019-04-11 10:18+0200\n"
+"PO-Revision-Date: 2019-04-11 10:19+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: it_IT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+"X-Generator: Poedit 2.1.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: i18n.py:24
+msgid "Watch"
+msgstr "Guarda"
+
+#: i18n.py:25
+msgid "Settings"
+msgstr "Impostazioni"
+
+#: i18n.py:26
+msgid "Loading..."
+msgstr "Caricamento..."
+
+#: i18n.py:27
+msgid "An error as occourred while loading the anime list"
+msgstr "Si è verificato un errore nel caricamento della lista anime"
+
+#: i18n.py:28
+msgid "An error as occourred while loading the anime info"
+msgstr ""
+"Si è verificato un errore nel caricamento delle informazioni dell'anime"
+
+#: i18n.py:29
+msgid "Anime not available from this source"
+msgstr "Questo anime non è disponibile da questa fonte"
+
+#: i18n.py:30
+msgid "Lights"
+msgstr "Luci"
+
+#: i18n.py:31
+msgid "Download"
+msgstr "Scarica"
+
+#: i18n.py:32
+msgid "Episode"
+msgstr "Episodio"
+
+#: i18n.py:33
+msgid "Previous"
+msgstr "Precedente"
+
+#: i18n.py:34
+msgid "Next"
+msgstr "Successivo"
+
+#: i18n.py:35
+msgid "Close"
+msgstr "Chiudi"
+
+#: i18n.py:36
+msgid "An error as occourred while downloading"
+msgstr "Si è verificato un errore durante il download"
+
+#: i18n.py:37
+msgid "HLS player is not supported by this browser"
+msgstr "Il player HLS non è supportato da questo browser"
+
+#: i18n.py:38
+msgid "An error as occourred while loading the anime episode"
+msgstr "Si è verificato un errore nel caricamento dell'episodio"
+
+#: i18n.py:39
+msgid "Autoplaying next episode..."
+msgstr "Riproduzione automatica prossimo episodio..."
+
+#: i18n.py:40
+msgid "Click anywhere to cancel"
+msgstr "Premi da ovunque per annullare"
+
+#: i18n.py:41
+msgid "Cancel"
+msgstr "Annulla"
+
+#: i18n.py:42
+msgid "Save"
+msgstr "Salva"
+
+#: i18n.py:43
+msgid "Create anime sub-folder"
+msgstr "Crea una sottocartella per ogni anime"
+
+#: i18n.py:44
+msgid "Create season sub-folder"
+msgstr "Crea una sottocartella per ogni stagione"
+
+#: i18n.py:45
+msgid "Theme \"{theme_name}\" by {theme_author}"
+msgstr "Tema \"{theme_name}\" creato da {theme_author}"
+
+#: i18n.py:46
+msgid "Theme"
+msgstr "Tema"
+
+#: i18n.py:47
+msgid "Interface"
+msgstr "Interfaccia"
+
+#: i18n.py:48
+msgid "Advanced"
+msgstr "Avanzate"
+
+#: i18n.py:49
+msgid ""
+"Don't touch anything from below if you aren't sure of what you're doing."
+msgstr ""
+"Non toccare nulla di quanto qui in basso, se non sei sicuro di quello che "
+"stai facendo."
+
+#: i18n.py:50
+msgid "Port"
+msgstr "Porta"
+
+#: i18n.py:51
+msgid "Download folder"
+msgstr "Cartella di download"
+
+#: i18n.py:52
+msgid "No Name"
+msgstr "Senza Nome"
+
+#: i18n.py:53
+msgid "No Author"
+msgstr "Senza Autore"
+
+#: i18n.py:54
+msgid "Episodes added to the download queue: {n}"
+msgstr "Episodi aggiunti alla coda di download: {n}"
+
+#: i18n.py:55
+msgid "Download Manager"
+msgstr "Gestione Download"
+
+#: i18n.py:56
+msgid "No downloads"
+msgstr "Nessun download!"
+
+#: i18n.py:57
+msgid "Downloading: {0} - Completed: {1} - Queued: {2}"
+msgstr "In download: {0} - Completati: {1} - In coda: {2}"
+
+#: i18n.py:58
+msgid "Max parallel downloads"
+msgstr "Download paralleli massimi"
+
+#: i18n.py:59
+msgid "Clean"
+msgstr "Pulisci"
+
+#: i18n.py:60
+msgid "Cancel All"
+msgstr "Annulla tutto"
+
+#: i18n.py:61
+msgid "Finished"
+msgstr "Completato"
+
+#: i18n.py:62
+msgid "Downloading"
+msgstr "In download"
+
+#: i18n.py:63
+msgid "ETA"
+msgstr "ETA"
+
+#: i18n.py:64
+msgid "Anime"
+msgstr "Anime"
+
+#: i18n.py:65
+msgid "Episode title"
+msgstr "Titolo episodio"
+
+#: i18n.py:66
+msgid "Status"
+msgstr "Stato"
+
+#: i18n.py:67
+msgid "Progress"
+msgstr "Progresso"
+
+#: i18n.py:68
+msgid "Speed"
+msgstr "Velocità"
+
+#: i18n.py:69
+msgid "Queued"
+msgstr "Incodato"
+
+#: i18n.py:70
+msgid "Cancelled"
+msgstr "Annullato"
+
+#: i18n.py:71
+msgid "Error: Anime list is empty please add or enable some modules!"
+msgstr "Errore: la lista Anime è vuota, abilita o aggiungi qualche modulo!"
+
+#: i18n.py:72
+msgid "Exit"
+msgstr "Esci"
+
+#: i18n.py:73
+msgid "Open"
+msgstr "Apri"
+
+#: i18n.py:74
+msgid "Options for launching MuseigennAnime, default will run with UI"
+msgstr ""
+"Opzioni per far partire MuseigennAnime, predefinito verrà eseguito con una "
+"Interfaccia Utente"
+
+#: i18n.py:75
+msgid "Run or build with console instead of UI"
+msgstr "Esegui o compila con la console invece dell'Interfaccia Utente"
+
+#: i18n.py:76
+msgid "Build frozen executable and exit"
+msgstr "Compila l'eseguibile ed esci"
+
+#: i18n.py:77
+msgid "Show this help message and exit"
+msgstr "Mostra questo messaggio d'aiuto ed esci"
+
+#: i18n.py:78
+msgid "Launching MuseigennAnime without console..."
+msgstr "Avviando MuseigennAnime senza console..."
+
+#: i18n.py:79
+msgid "Launching MuseigennAnime with console..."
+msgstr "Avviando MuseigennAnime con console..."
+
+#: i18n.py:80
+msgid "Shutdown MuseigennAnime"
+msgstr "Spegni MuseigennAnime"
+
+#: i18n.py:81
+msgid "Confirm"
+msgstr "Conferma"
+
+#: i18n.py:82
+msgid "Do you really want to shutdown MuseigennAnime?"
+msgstr "Vuoi davvero spegnere MuseigennAnime?"
+
+#: i18n.py:83
+msgid "Search"
+msgstr "Cerca"
+
+#: i18n.py:84
+msgid "Copy Address"
+msgstr "Copia Indirizzo"
+
+#: i18n.py:85
+msgid "Open list"
+msgstr "Apri lista"
+
+#: i18n.py:86
+msgid "Search current module only"
+msgstr "Cerca solo in questo modulo"
+
+#: i18n.py:87
+msgid "Search all modules"
+msgstr "Cerca in tutti i moduli"
+
+#: i18n.py:88
+msgid "Show advanced settings"
+msgstr "Mostra impostazioni avanzate"
+
+#: i18n.py:89
+msgid "Listen all interfaces"
+msgstr "Ascolta tutte le interfacce"
+
+#: i18n.py:90
+msgid "Listen on custom interface"
+msgstr "Ascolta su interfaccia personalizzata"
+
+#: i18n.py:91
+msgid "Modules"
+msgstr "Moduli"
+
+#: i18n.py:92
+msgid "Enable/Disable Modules"
+msgstr "Abilita/Disabilita Moduli"
+
+#: i18n.py:93
+msgid "Select a module from above or below"
+msgstr "Seleziona un modulo da qui sopra o da qua sotto"
+
+#: i18n.py:94
+msgid "Download directly to this device"
+msgstr "Scarica direttamente su questo dispositivo"
